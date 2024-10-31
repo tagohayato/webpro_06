@@ -1,8 +1,11 @@
 const express = require("express");
+const path = require('path');
 const app = express();
 
+app.use(express.static(path.join(__dirname + "/public")));
+
 app.set('view engine', 'ejs');
-app.use("/public", express.static(__dirname + "/public"));
+app.set('views', path.join(__dirname, 'views'));
 
 app.get("/hello1", (req, res) => {
   const message1 = "Hello world";
@@ -29,8 +32,8 @@ app.get("/luck", (req, res) => {
 
 app.get("/janken", (req, res) => {
   let hand = req.query.hand;
-  let win = Number(req.query.win);
-  let total = Number(req.query.total);
+  let win = Number(req.query.win) || 0; 
+  let total = Number(req.query.total) || 0; 
   console.log({ hand, win, total });
   
   const num = Math.floor(Math.random() * 3 + 1);
@@ -65,6 +68,17 @@ app.get("/janken", (req, res) => {
   };
 
   res.render('janken', display);
+});
+
+// 404エラーハンドリング
+app.use((req, res) => {
+  res.status(404).send('404 エラー: ページが見つかりません');
+});
+
+// サーバーの起動
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`サーバーがポート${PORT}で起動しました`);
 });
 
 
