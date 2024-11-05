@@ -73,7 +73,7 @@ app.get("/janken", (req, res) => {
   res.render('janken', display);
 });
 
-// 404エラーハンドリング
+// エラーが発生した場合
 app.use((req, res) => {
   res.status(404).send('404 エラー: ページが見つかりません');
 });
