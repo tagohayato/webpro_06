@@ -30,8 +30,12 @@ app.get("/luck", (req, res) => {
   res.render( 'luck', {number:num, luck:luck} );
 });
 
+
+// テンプレートエンジンの設定
+app.set('view engine', 'ejs');
+
 app.get("/janken", (req, res) => {
-  let hand = req.query.hand;
+  let hand = req.query.hand || ['グー', 'チョキ', 'パー'][Math.floor(Math.random() * 3)];
   let win = Number(req.query.win) || 0; 
   let total = Number(req.query.total) || 0; 
   console.log({ hand, win, total });
@@ -42,7 +46,6 @@ app.get("/janken", (req, res) => {
   else if (num == 2) cpu = 'チョキ';
   else cpu = 'パー';
 
-  // 勝敗の判定を追加
   let judgement = '';
   if (hand === cpu) {
     judgement = 'あいこ';
@@ -76,10 +79,4 @@ app.use((req, res) => {
 });
 
 // サーバーの起動
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`サーバーがポート${PORT}で起動しました`);
-});
-
-
 app.listen(8080, () => console.log("Example app listening on port 8080!"));
