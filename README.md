@@ -9,16 +9,23 @@ app5.js | プログラムの説明
 public/janken.html | じゃんけんの開始画面
 public/multipleofthree.html | 3の倍数判定測定開始画面 
 public/bmi.html | 身長体重入力画面
-```javascript
-console.log('Hello');
-```
-1. node app5.jsを起動する
+
+前提：node app5.jsを起動する
+
 1. Webブラウザで http://localhost:8080/janken.html にアクセスする
-1. 自分の手を入力する
-1. Webブラウザで http://localhost:8080/multipleofthree.html にアクセスする
-1. 適当な数字を入力する
-1. Webブラウザで http://localhost:8080/bmi/html にアクセスする
-1. 自分の身長と体重を入力する
+
+- グーorチョキorパーのいずれかを入力する
+- "じゃんけん ポン" をクリックする
+
+2. Webブラウザで http://localhost:8080/multipleofthree.html にアクセスする
+
+- 適当な数字を入力する
+- "判定" をクリックする
+
+3. Webブラウザで http://localhost:8080/bmi/html にアクセスする
+
+- 自分の身長(cm)と体重(kg)を入力する
+- "BMIを計算" をクリックする <!--もう一度計算をクリックすると3の倍数判定プログラムに移動しています．対処方法を模索したのですが，原因を発見することができませんでした．-->
 
 ```mermaid
 flowchart TD;
