@@ -73,6 +73,75 @@ app.get("/janken", (req, res) => {
   res.render('janken', display);
 });
 
+
+// テンプレートエンジンの設定
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+// 静的ファイルの設定
+app.use(express.static(path.join(__dirname, 'public')));
+
+// ルートエンドポイント
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'multipleofthree.html'));
+});
+
+// 3の倍数判定のエンドポイント
+app.get('/multipleofthree', (req, res) => {
+  const number = Number(req.query.number);
+  let result = '';
+
+  if (!isNaN(number)) {
+    result = number % 3 === 0 ? '3の倍数です' : '3の倍数ではありません';
+  } else {
+    result = '数字を入力してください。';
+  }
+
+  res.render('multipleofthree', { number, result });
+});
+
+// テンプレートエンジンの設定
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+// 静的ファイルの設定
+app.use(express.static(path.join(__dirname, 'public')));
+
+// フォームからBMIを計算するエンドポイント
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'bmi.html'));
+});
+
+// BMI計算と結果表示のエンドポイント
+app.get('/calculate', (req, res) => {
+  const height = Number(req.query.height); // 身長（cm）
+  const weight = Number(req.query.weight); // 体重（kg）
+
+  let result = '';
+  let bmi = 0;
+
+  if (!isNaN(height) && !isNaN(weight) && height > 0 && weight > 0) {
+    // BMI計算: 体重(kg) ÷ (身長(m) × 身長(m))
+    bmi = weight / ((height / 100) ** 2);
+    
+    if (bmi < 18.5) {
+      result = '低体重 (Underweight)';
+    } else if (bmi >= 18.5 && bmi < 24.9) {
+      result = '普通体重 (Normalweight)';
+    } else if (bmi >= 25 && bmi < 29.9) {
+      result = '肥満（1度） (Overweight)';
+    } else if (bmi >= 30) {
+      result = '肥満（2度以上） (Obese)';
+    }
+
+    bmi = bmi.toFixed(2); // BMIを小数点2位まで表示
+  } else {
+    result = '身長と体重を正しく入力してください。';
+  }
+
+  res.render('bmiResult', { bmi, result });
+});
+
 // エラーが発生した場合
 app.use((req, res) => {
   res.status(404).send('404 エラー: ページが見つかりません');
