@@ -10,7 +10,11 @@ public/janken.html | じゃんけんの開始画面
 public/multipleofthree.html | 3の倍数判定測定開始画面 
 public/bmi.html | 身長体重入力画面
 
-前提：node app5.jsを起動する
+## 起動方法
+```javascript
+node app5.js
+```
+で app5.js を起動する
 
 # じゃんけん
 1. Webブラウザで http://localhost:8080/janken.html にアクセスする
