@@ -26,6 +26,10 @@ app.get("/luck", (req, res) => {
   let luck = '';
   if( num==1 ) luck = '大吉';
   else if( num==2 ) luck = '中吉';
+  else if(num==3)luck = '吉';
+  else if(num==4)luck = '小吉';
+  else if(num==5)luck = '末吉';
+  else if(num==6)luck = '大凶';
   console.log( 'あなたの運勢は' + luck + 'です' );
   res.render( 'luck', {number:num, luck:luck} );
 });
@@ -82,23 +86,25 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ルートエンドポイント
-app.get('/', (req, res) => {
+app.get('/multipleofthree', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'multipleofthree.html'));
 });
 
-// 3の倍数判定のエンドポイント
-app.get('/multipleofthree', (req, res) => {
-  const number = Number(req.query.number);
-  let result = '';
-
-  if (!isNaN(number)) {
-    result = number % 3 === 0 ? '3の倍数です' : '3の倍数ではありません';
-  } else {
-    result = '数字を入力してください。';
-  }
-
-  res.render('multipleofthree', { number, result });
+app.get('/', (req, res) => {
+  res.redirect('/multipleofthree');
 });
+
+// 3の倍数判定のエンドポイント
+app.get("/number", (req, res) => {
+  const number = parseInt(req.query.number, 10);
+  if (isNaN(number)) {
+      return res.render('multipleofthreeResult', { number: req.query.number, result: '無効な入力です' });
+  }
+  const result = number % 3 === 0 ? '3の倍数です' : '3の倍数ではありません';
+  res.render('multipleofthreeResult', { number: number, result: result });
+});
+
+
 
 // テンプレートエンジンの設定
 app.set('view engine', 'ejs');
@@ -108,8 +114,12 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // フォームからBMIを計算するエンドポイント
-app.get('/', (req, res) => {
+app.get('/bmi', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'bmi.html'));
+});
+
+app.get('/', (req, res) => {
+  res.redirect('/bmi');
 });
 
 // BMI計算と結果表示のエンドポイント
