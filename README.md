@@ -5,8 +5,10 @@
 -|-
 app5.js | サーバプログラム
 views/show.ejs | hello1とhello2のテンプレートファイル
+
 #### 機能説明
 "Hello world"と"Bon jour"をユーザの画面上に表示させる
+
 #### 使用手順
 1. 以下のコードでapp5.jsを8080番ポートで起動する（以下省略）
 ```javascript
@@ -26,8 +28,10 @@ http://localhost:8080/hello2
 app5.js | サーバプログラム
 views/icon.ejs | iconのテンプレートファイル
 Apple_logo_black.svg | 表示する画像
+
 ####　 機能説明
 ユーザにApple社のロゴを表示させる
+
 #### 使用手順
 1. ブラウザに以下のURLでアクセスする
 ```
@@ -39,10 +43,12 @@ http://localhost:8080/icon
 -|-
 app5.js | サーバプログラム
 views/luck.ejs | luckのテンプレートファイル
+
 #### 機能説明
 ユーザに大吉などの運勢を表示させる
 大吉，中吉，吉，小吉，末吉，大凶
 が出現するようになっている
+
 #### 使用手順
 1. ブラウザに以下のURLでアクセスする
 ```
@@ -55,11 +61,13 @@ http://localhost:8080/luck
 app5.js | サーバプログラム
 views/janken.ejs | jankenのテンプレートファイル
 public/janken.html | じゃんけんの開始画面
+
 #### 機能説明
 1. ユーザがグー，チョキ，パーのいずれかを入力する
 2. "じゃんけん　ポン"のボタンをクリックする
 3. 自身が入力した手とサーバのランダムの手とその判定,じゃんけんを行った回数，サーバに勝った回数をユーザに表示させる
 4. "次は何を出す？"とあるため繰り返すことができる
+
 #### 使用手順
 1. ブラウザで以下のURLにアクセスする
 ```
@@ -68,6 +76,7 @@ http://localhost:8080/janken.html
 2. グー，チョキ，パーのいずれかをフォームに入力する
 3. "じゃんけん　ポン"をクリックする
 4. ２.と３.の手順を繰り返す
+
 ### 3の倍数判定について
 #### ファイル一覧
   ファイル名 | 説明
@@ -75,8 +84,10 @@ http://localhost:8080/janken.html
 app5.js | サーバプログラム
 views/multipleofthreeResult.ejs | jankenのテンプレートファイル
 public/janken.html | じゃんけんの開始画面
+
 #### 機能説明
 入力した数字（半角）を3の倍数かを判定，もう一度試すことで何回も繰り返すことができる
+
 #### 使用手順
 1. ブラウザで以下のURLにアクセスする
 ```
@@ -85,6 +96,7 @@ http://localhost:8080multipleofthree.html
 2. 適当な数字を入力する
 3. "判定" をクリックする
 4. "もう一度試す"をクリックし，２.〜３.を繰り返す
+
 ### BMI計算について
 #### ファイル一覧
   ファイル名 | 説明
@@ -92,9 +104,11 @@ http://localhost:8080multipleofthree.html
 app5.js | サーバプログラム
 views/bmiResult.ejs | bmiのテンプレートファイル
 public/bmi.html | BMI計算の開始画面
+
 #### 機能説明
 身長（cm），体重（kg）を入力し，"BMIを計算"をクリックすると，BMIと肥満度をユーザに表示させる
 肥満度：低体重 (Underweight)，普通体重 (Normalweight)，肥満（1度） (Overweight)，肥満（2度以上） (Obese)
+
 #### 使用手順
 1. ブラウザで以下のURLにアクセスする
 ```
