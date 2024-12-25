@@ -29,8 +29,7 @@ app5.js | サーバプログラム
 views/icon.ejs | iconのテンプレートファイル
 Apple_logo_black.svg | 表示する画像
 
-####　 機能説明
-
+#### 機能説明
 ユーザにApple社のロゴを表示させる
 
 #### 使用手順
