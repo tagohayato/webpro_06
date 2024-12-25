@@ -106,7 +106,7 @@ views/bmiResult.ejs | bmiのテンプレートファイル
 public/bmi.html | BMI計算の開始画面
 
 #### 機能説明
-身長（cm），体重（kg）を入力し，"BMIを計算"をクリックすると，BMIと肥満度をユーザに表示させる
+身長（cm），体重（kg）を入力し，"BMIを計算"をクリックすると，計算されたBMIと肥満度をユーザに表示させる 
 肥満度：低体重 (Underweight)，普通体重 (Normalweight)，肥満（1度） (Overweight)，肥満（2度以上） (Obese)
 
 #### 使用手順
