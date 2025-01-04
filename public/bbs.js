@@ -38,7 +38,6 @@ document.querySelector('#check').addEventListener('click', () => {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
     };
-
     const url = "/check";
     fetch(url, params)
         .then((response) => {
@@ -78,6 +77,18 @@ document.querySelector('#check').addEventListener('click', () => {
                             mes_area.innerText = mes.message;
                             cover.appendChild(name_area);
                             cover.appendChild(mes_area);
+                            let like_button = document.createElement('button');
+                            like_button.innerText = "いいね";
+                            like_button.onclick = () => likePost(mes.id);
+                            cover.appendChild(like_button);
+                            let like_count = document.createElement('span');
+                            like_count.id = `likes-${mes.id}`;
+                            like_count.innerText = `いいね: ${mes.likes || 0}`;
+                            cover.appendChild(like_count);
+                            let edit_button = document.createElement('button');
+                            edit_button.innerText = "編集";
+                            edit_button.onclick = () => editPost(mes.id);
+                            cover.appendChild(edit_button);
                             bbs.appendChild(cover);
                         }
                     });
@@ -113,4 +124,36 @@ function searchPosts() {
                 bbs.appendChild(cover);
             }
         });
+}
+
+function likePost(postId) {
+    const url = `/bbs/${postId}/like`;
+    fetch(url, { method: "POST" })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const likeSpan = document.getElementById(`likes-${postId}`);
+                likeSpan.innerText = `いいね: ${data.likes}`;
+            }
+        });
+}
+
+function editPost(postId) {
+    const newMessage = prompt("新しい内容を入力してください:");
+    if (newMessage) {
+        const url = `/bbs/${postId}`;
+        const params = {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: newMessage })
+        };
+        fetch(url, params)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert("投稿を編集しました");
+                    location.reload(); // 必要に応じて画面を更新
+                }
+            });
+    }
 }
