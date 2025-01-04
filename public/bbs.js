@@ -109,21 +109,26 @@ function searchPosts() {
             return response.json();
         })
         .then(posts => {
-            bbs.innerHTML = ""; // 一度投稿をクリア
-            for (let post of posts) {
-                let cover = document.createElement('div');
-                cover.className = 'cover';
-                let name_area = document.createElement('span');
-                name_area.className = 'name';
-                name_area.innerText = post.name;
-                let mes_area = document.createElement('span');
-                mes_area.className = 'mes';
-                mes_area.innerText = post.message;
-                cover.appendChild(name_area);
-                cover.appendChild(mes_area);
-                bbs.appendChild(cover);
+            bbs.innerHTML = ""; // 既存の投稿をクリア
+            if (posts.length === 0) {
+                bbs.innerHTML = "<p>該当する投稿がありません。</p>";
+            } else {
+                for (let post of posts) {
+                    let cover = document.createElement('div');
+                    cover.className = 'cover';
+                    let name_area = document.createElement('span');
+                    name_area.className = 'name';
+                    name_area.innerText = post.name;
+                    let mes_area = document.createElement('span');
+                    mes_area.className = 'mes';
+                    mes_area.innerText = post.message;
+                    cover.appendChild(name_area);
+                    cover.appendChild(mes_area);
+                    bbs.appendChild(cover);
+                }
             }
-        });
+        })
+        .catch(error => console.error("エラー:", error));
 }
 
 function likePost(postId) {
@@ -151,8 +156,9 @@ function editPost(postId) {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert("投稿を編集しました");
-                    location.reload(); // 必要に応じて画面を更新
+                    const postElement = document.getElementById(`post-${postId}`);
+                    const messageElement = postElement.querySelector(".mes");
+                    messageElement.innerText = newMessage; // 画面上で更新
                 }
             });
     }
