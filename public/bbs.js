@@ -84,11 +84,14 @@ function likePost(postId) {
 function editPost(postId) {
     const newMessage = prompt("新しいメッセージを入力してください:");
     if (newMessage) {
-        fetch(`/bbs/${postId}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ message: newMessage })
-        })
+        const params = {
+            method: "POST",
+            body: `message=${encodeURIComponent(newMessage)}`,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        };
+        fetch(`/bbs/${postId}/edit`, params)
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
@@ -102,7 +105,15 @@ function editPost(postId) {
 // 検索機能
 function searchPosts() {
     const query = document.getElementById("searchInput").value;
-    fetch(`/bbs/search?query=${encodeURIComponent(query)}`)
+    const params = {
+        method: "POST",
+        body: `query=${encodeURIComponent(query)}`,
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    };
+
+    fetch("/search", params)
         .then(response => response.json())
         .then(posts => {
             bbs.innerHTML = "";

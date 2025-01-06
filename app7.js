@@ -4,7 +4,6 @@ const app = express();
 
 let bbs = []; // 投稿データを保持する配列
 
-app.set('view engine', 'ejs');
 app.use("/public", express.static(__dirname + "/public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -28,9 +27,9 @@ app.post("/read", (req, res) => {
     res.json({ messages: start === 0 ? bbs : bbs.slice(start) });
 });
 
-// 検索機能
-app.get("/bbs/search", (req, res) => {
-    const query = req.query.query?.toLowerCase() || "";
+// 検索機能 (POSTメソッド)
+app.post("/search", (req, res) => {
+    const query = req.body.query?.toLowerCase() || "";
     const results = bbs.filter(post =>
         post.name.toLowerCase().includes(query) || 
         post.message.toLowerCase().includes(query)
@@ -38,7 +37,7 @@ app.get("/bbs/search", (req, res) => {
     res.json(results);
 });
 
-// いいね機能
+// いいね機能 (POSTメソッド)
 app.post("/bbs/:id/like", (req, res) => {
     const id = parseInt(req.params.id, 10);
     const post = bbs.find(p => p.id === id);
@@ -50,8 +49,8 @@ app.post("/bbs/:id/like", (req, res) => {
     }
 });
 
-// 編集機能
-app.put("/bbs/:id", (req, res) => {
+// 編集機能 (POSTメソッド)
+app.post("/bbs/:id/edit", (req, res) => {
     const id = parseInt(req.params.id, 10);
     const post = bbs.find(p => p.id === id);
     if (post) {
