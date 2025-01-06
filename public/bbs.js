@@ -45,6 +45,7 @@ document.querySelector('#check').addEventListener('click', () => {
                 messageArea.className = 'mes';
                 messageArea.innerText = post.message;
 
+                // いいね機能
                 const likeButton = document.createElement('button');
                 likeButton.innerText = "いいね";
                 likeButton.onclick = () => likePost(post.id);
@@ -52,6 +53,7 @@ document.querySelector('#check').addEventListener('click', () => {
                 likeCount.id = `likes-${post.id}`;
                 likeCount.innerText = ` いいね: ${post.likes}`;
 
+                // 編集機能
                 const editButton = document.createElement('button');
                 editButton.innerText = "編集";
                 editButton.onclick = () => editPost(post.id);
@@ -95,31 +97,4 @@ function editPost(postId) {
                 }
             });
     }
-}
-
-// 検索機能
-function searchPosts() {
-    const query = document.getElementById("searchInput").value;
-    fetch(`/bbs/search?query=${encodeURIComponent(query)}`)
-        .then(response => response.json())
-        .then(posts => {
-            bbs.innerHTML = "";
-            if (posts.length === 0) {
-                bbs.innerHTML = "<p>該当する投稿がありません。</p>";
-            } else {
-                posts.forEach(post => {
-                    const cover = document.createElement('div');
-                    cover.className = 'cover';
-                    const nameArea = document.createElement('span');
-                    nameArea.className = 'name';
-                    nameArea.innerText = post.name;
-                    const messageArea = document.createElement('span');
-                    messageArea.className = 'mes';
-                    messageArea.innerText = post.message;
-                    cover.appendChild(nameArea);
-                    cover.appendChild(messageArea);
-                    bbs.appendChild(cover);
-                });
-            }
-        });
 }
