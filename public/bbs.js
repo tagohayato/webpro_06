@@ -98,3 +98,30 @@ function editPost(postId) {
             });
     }
 }
+
+// 検索機能
+function searchPosts() {
+    const query = document.getElementById("searchInput").value;
+    fetch(`/bbs/search?query=${encodeURIComponent(query)}`)
+        .then(response => response.json())
+        .then(posts => {
+            bbs.innerHTML = "";
+            if (posts.length === 0) {
+                bbs.innerHTML = "<p>該当する投稿がありません。</p>";
+            } else {
+                posts.forEach(post => {
+                    const cover = document.createElement('div');
+                    cover.className = 'cover';
+                    const nameArea = document.createElement('span');
+                    nameArea.className = 'name';
+                    nameArea.innerText = post.name;
+                    const messageArea = document.createElement('span');
+                    messageArea.className = 'mes';
+                    messageArea.innerText = post.message;
+                    cover.appendChild(nameArea);
+                    cover.appendChild(messageArea);
+                    bbs.appendChild(cover);
+                });
+            }
+        });
+}
