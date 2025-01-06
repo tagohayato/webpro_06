@@ -44,12 +44,58 @@ document.querySelector('#check').addEventListener('click', () => {
                 const messageArea = document.createElement('span');
                 messageArea.className = 'mes';
                 messageArea.innerText = post.message;
+
+                const likeButton = document.createElement('button');
+                likeButton.innerText = "いいね";
+                likeButton.onclick = () => likePost(post.id);
+                const likeCount = document.createElement('span');
+                likeCount.id = `likes-${post.id}`;
+                likeCount.innerText = ` いいね: ${post.likes}`;
+
+                const editButton = document.createElement('button');
+                editButton.innerText = "編集";
+                editButton.onclick = () => editPost(post.id);
+
                 cover.appendChild(nameArea);
                 cover.appendChild(messageArea);
+                cover.appendChild(likeButton);
+                cover.appendChild(likeCount);
+                cover.appendChild(editButton);
                 bbs.appendChild(cover);
             });
         });
 });
+
+// いいね機能
+function likePost(postId) {
+    fetch(`/bbs/${postId}/like`, { method: "POST" })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const likeCount = document.getElementById(`likes-${postId}`);
+                likeCount.innerText = ` いいね: ${data.likes}`;
+            }
+        });
+}
+
+// 編集機能
+function editPost(postId) {
+    const newMessage = prompt("新しいメッセージを入力してください:");
+    if (newMessage) {
+        fetch(`/bbs/${postId}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: newMessage })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert("投稿を編集しました");
+                    document.querySelector('#check').click(); // 投稿リストを更新
+                }
+            });
+    }
+}
 
 // 検索機能
 function searchPosts() {
