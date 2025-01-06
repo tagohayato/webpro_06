@@ -61,4 +61,5 @@ app.post("/bbs/:id/edit", (req, res) => {
     }
 });
 
-app.listen(8080, () => console.log("Server is running on http://localhost:8080"));
+app.listen(8080, () => console.log("Example app listening on port 8080!"));
+
