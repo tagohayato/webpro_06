@@ -2,14 +2,14 @@
 const express = require("express");
 const app = express();
 
-let bbs = [];  // 本来はDBMSを使用するが、今回はこの変数にデータを蓄える
+let bbs = []; // 投稿データを保持する配列
 
 app.set('view engine', 'ejs');
 app.use("/public", express.static(__dirname + "/public"));
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json()); // JSON形式のリクエストを処理
+app.use(express.json());
 
-// 投稿追加
+// 投稿送信
 app.post("/post", (req, res) => {
     const name = req.body.name;
     const message = req.body.message;

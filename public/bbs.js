@@ -3,7 +3,7 @@
 let number = 0;
 const bbs = document.querySelector('#bbs');
 
-// 投稿機能
+// 投稿送信機能
 document.querySelector('#post').addEventListener('click', () => {
     const name = document.querySelector('#name').value;
     const message = document.querySelector('#message').value;
@@ -25,9 +25,30 @@ document.querySelector('#post').addEventListener('click', () => {
 
 // 投稿チェック機能
 document.querySelector('#check').addEventListener('click', () => {
-    fetch("/check", { method: "POST" })
+    fetch("/read", {
+        method: "POST",
+        body: "start=0",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    })
         .then(response => response.json())
-        .then(data => console.log("投稿数:", data.number));
+        .then(data => {
+            bbs.innerHTML = ""; // 投稿リストをクリア
+            data.messages.forEach(post => {
+                const cover = document.createElement('div');
+                cover.className = 'cover';
+                const nameArea = document.createElement('span');
+                nameArea.className = 'name';
+                nameArea.innerText = post.name;
+                const messageArea = document.createElement('span');
+                messageArea.className = 'mes';
+                messageArea.innerText = post.message;
+                cover.appendChild(nameArea);
+                cover.appendChild(messageArea);
+                bbs.appendChild(cover);
+            });
+        });
 });
 
 // 検索機能
