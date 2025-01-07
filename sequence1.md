@@ -14,9 +14,6 @@ sequenceDiagram
   BBSクライアント ->> BBSサーバ: POST /post (投稿)
   BBSサーバ ->> BBSクライアント: 投稿成功 (success: true)
   
-  BBSクライアント ->> BBSサーバ: POST /check (投稿数確認)
-  BBSサーバ ->> BBSクライアント: 全投稿数
-  
   BBSクライアント ->> BBSサーバ: POST /read (投稿読み込み)
   BBSサーバ ->> BBSクライアント: 投稿データ
   
